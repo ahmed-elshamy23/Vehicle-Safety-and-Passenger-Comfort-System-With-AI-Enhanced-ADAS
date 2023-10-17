@@ -1,5 +1,5 @@
-#ifndef USART_REG_H
-#define USART_REG_H
+#ifndef USART_PRIVATE_H
+#define USART_PRIVATE_H
 
 #define USART_SR *((volatile u32 *)(0x40013800))
 #define USART_DR *((volatile u32 *)(0x40013804))
