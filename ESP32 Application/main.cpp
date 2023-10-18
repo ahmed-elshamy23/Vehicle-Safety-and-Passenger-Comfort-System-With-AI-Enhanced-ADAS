@@ -3,16 +3,17 @@
 #include "CameraWebServer_Static_IP.cpp"
 
 /*********************************************main fuctions*********************************************/
-void setup(){
-    Serial.begin(115200);
-    /**********UART Part**********/
-    Serial1.begin(9600);
-    /********WiFi Part**********/
-    setupWiFi();
-    /*******MQTT part**********/
-    client.setServer(broker,1883);
-    client.setCallback(callback);
-    /******camera part ********/
+void setup()
+{
+  Serial.begin(115200);
+  /**********UART Part**********/
+  Serial1.begin(9600);
+  /********WiFi Part**********/
+  setupWiFi();
+  /*******MQTT part**********/
+  client.setServer(broker, 1883);
+  client.setCallback(callback);
+  /******camera part ********/
   Serial.setDebugOutput(true);
   Serial.println();
 
@@ -38,76 +39,86 @@ void setup(){
   config.xclk_freq_hz = 20000000;
   config.frame_size = FRAMESIZE_UXGA;
   config.pixel_format = PIXFORMAT_JPEG; // for streaming
-  //config.pixel_format = PIXFORMAT_RGB565; // for face detection/recognition
+  // config.pixel_format = PIXFORMAT_RGB565; // for face detection/recognition
   config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;
   config.fb_location = CAMERA_FB_IN_PSRAM;
   config.jpeg_quality = 12;
   config.fb_count = 1;
-  
+
   // if PSRAM IC present, init with UXGA resolution and higher JPEG quality
   //                      for larger pre-allocated frame buffer.
-  if(config.pixel_format == PIXFORMAT_JPEG){
-    if(psramFound()){
+  if (config.pixel_format == PIXFORMAT_JPEG)
+  {
+    if (psramFound())
+    {
       config.jpeg_quality = 10;
       config.fb_count = 2;
       config.grab_mode = CAMERA_GRAB_LATEST;
-    } else {
+    }
+    else
+    {
       // Limit the frame size when PSRAM is not available
       config.frame_size = FRAMESIZE_SVGA;
       config.fb_location = CAMERA_FB_IN_DRAM;
     }
-  } else {
+  }
+  else
+  {
     // Best option for face detection/recognition
     config.frame_size = FRAMESIZE_240X240;
-  #if CONFIG_IDF_TARGET_ESP32S3
+#if CONFIG_IDF_TARGET_ESP32S3
     config.fb_count = 2;
-  #endif
+#endif
   }
 
-  #if defined(CAMERA_MODEL_ESP_EYE)
+#if defined(CAMERA_MODEL_ESP_EYE)
   pinMode(13, INPUT_PULLUP);
   pinMode(14, INPUT_PULLUP);
-  #endif
+#endif
 
   // camera init
   esp_err_t err = esp_camera_init(&config);
-  if (err != ESP_OK) {
+  if (err != ESP_OK)
+  {
     Serial.printf("Camera init failed with error 0x%x", err);
     return;
   }
 
-  sensor_t * s = esp_camera_sensor_get();
+  sensor_t *s = esp_camera_sensor_get();
   // initial sensors are flipped vertically and colors are a bit saturated
-  if (s->id.PID == OV3660_PID) {
-    s->set_vflip(s, 1); // flip it back
-    s->set_brightness(s, 1); // up the brightness just a bit
+  if (s->id.PID == OV3660_PID)
+  {
+    s->set_vflip(s, 1);       // flip it back
+    s->set_brightness(s, 1);  // up the brightness just a bit
     s->set_saturation(s, -2); // lower the saturation
   }
   // drop down frame size for higher initial frame rate
-  if(config.pixel_format == PIXFORMAT_JPEG){
+  if (config.pixel_format == PIXFORMAT_JPEG)
+  {
     s->set_framesize(s, FRAMESIZE_QVGA);
   }
 
-  #if defined(CAMERA_MODEL_M5STACK_WIDE) || defined(CAMERA_MODEL_M5STACK_ESP32CAM)
+#if defined(CAMERA_MODEL_M5STACK_WIDE) || defined(CAMERA_MODEL_M5STACK_ESP32CAM)
   s->set_vflip(s, 1);
   s->set_hmirror(s, 1);
-  #endif
+#endif
 
-  #if defined(CAMERA_MODEL_ESP32S3_EYE)
+#if defined(CAMERA_MODEL_ESP32S3_EYE)
   s->set_vflip(s, 1);
-  #endif
+#endif
 
-// Setup LED FLash if LED pin is defined in camera_pins.h
-  #if defined(LED_GPIO_NUM)
+  // Setup LED FLash if LED pin is defined in camera_pins.h
+#if defined(LED_GPIO_NUM)
   setupLedFlash(LED_GPIO_NUM);
-  #endif
-
+#endif
 }
 
-void loop(){
-    if(!client.connected()){
-        reconnect();
-    }
-    client.loop();
+void loop()
+{
+  if (!client.connected())
+  {
+    reconnect();
+  }
+  client.loop();
 }
 /*******************************************************************************************************/
