@@ -42,11 +42,46 @@ def showResults(original, detected):
 
 
 def laneDetect(captured):
-    # Convert the image to grayscale
-    frame = cv2.cvtColor(captured, cv2.COLOR_BGR2HSV)
-    frame = cv2.GaussianBlur(frame, (5, 5), 0)
-    edges = cv2.Canny(frame, 75, 150)
-    edges = region(edges)
-    lines = cv2.HoughLinesP(edges, 1, np.pi/180, threshold=30, maxLineGap=150)
+    plt.subplot(2, 2, 1)
+    plt.imshow(captured)
+    plt.title("Captured Lanes")
+    plt.axis('off')
+
+    gausian = cv2.GaussianBlur(captured, (5, 5), 3)
+    hsv = cv2.cvtColor(gausian, cv2.COLOR_BGR2HSV)
+    gray = cv2.cvtColor(gausian, cv2.COLOR_BGR2GRAY)
+
+    plt.subplot(2, 2, 2)
+    plt.imshow(hsv)
+    plt.title("HSV Lanes")
+    plt.axis('off')
+
+    lower_yellow = np.array([20, 100, 100])
+    upper_yellow = np.array([30, 255, 255])
+    mask_yellow = cv2.inRange(hsv, lower_yellow, upper_yellow)
+    mask_white = cv2.inRange(gray, 200, 255)
+    mask_yw = cv2.bitwise_or(mask_white, mask_yellow)
+    mask_yw_image = cv2.bitwise_and(gray, mask_yw)
+        
+    edges = cv2.Canny(mask_yw_image, 75, 150)
+    mask = np.zeros(edges.shape[:2], np.uint8)
+    mask[edges.shape[0] // 2:, :] = 255
+    edges = cv2.bitwise_and(edges, mask)
+
+    plt.subplot(2, 2, 3)
+    plt.imshow(mask_yw_image)
+    plt.title("Canny Lanes")
+    plt.axis('off')
+
+
+
+    lines = cv2.HoughLinesP(edges, 2, np.pi/180, threshold= 50, maxLineGap=150)
+
     result_image = display_lines(captured, lines)
-    showResults(captured, result_image)
+    plt.subplot(2, 2, 4)
+    plt.imshow(result_image
+    )
+    plt.title("Result Images")
+    plt.axis('off')
+
+    plt.show()
