@@ -21,7 +21,7 @@ void RCC_voidInitSysClock(void)
 #elif RCC_CLOCK_TYPE == RCC_PLL
 #if RCC_PLL_INPUT == RCC_PLL_IN_HSI_DIV_2
 	RCC_CFGR |= (0b10 << 0);
-	RCC_CFGR |= (0b0110 << 18);
+	RCC_CFGR |= (0b0111 << 18);
 	// RCC_CFGR|=(0b100<<8);
 	// RCC_CFGR|=(0b101<<11);
 	RCC_CR |= (1 << 24);
