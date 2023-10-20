@@ -8,7 +8,7 @@
 void ULTRASONIC_voidInit()
 {
     RCC_voidEnablePeripheralClock(APB2_BUS, TIM1_RCC);
-    RCC_voidEnablePeripheralClock(APB2_BUS, DIOA_RCC);
+    RCC_voidEnablePeripheralClock(APB2_BUS, ULTRASONIC_PORT_RCC);
     TIM1_voidInit();
     MDIO_voidSetPinDirection(ULTRASONIC_PORT, ULTRASONIC_TRIG, OUTPUT_SPEED_2MHZ_PP);
     MDIO_voidSetPinDirection(ULTRASONIC_PORT, ULTRASONIC_ECHO, INPUT_PULLUP_PULLDOWN);
@@ -26,5 +26,5 @@ f32 ULTRASONIC_f32GetDistance()
     while (MDIO_u8GetPinValue(ULTRASONIC_PORT, ULTRASONIC_ECHO))
         ;
     TIM1_voidStop();
-    return 340.0f * TIM1_u16GetTimerValue();
+    return 340.0f * TIM1_u16GetTimerValue() * 0.000001f;
 }
