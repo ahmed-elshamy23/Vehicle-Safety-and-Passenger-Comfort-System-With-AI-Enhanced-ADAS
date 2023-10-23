@@ -13,6 +13,6 @@ void TIM2_voidSetTimerValue(u16 value);
 
 u16 TIM2_u16GetTimerValue();
 
-void TIM2_voidDelay(f32 delayTime);
+void TIM2_voidGeneratePwm(u8 channel, f32 dutyCycle);
 
 #endif
