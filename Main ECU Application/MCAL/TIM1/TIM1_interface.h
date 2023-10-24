@@ -3,6 +3,13 @@
 
 #include "../../Common/std_types.h"
 
+#define MASK_16_BITS 0xFFFF
+#define TIM1_CR1_PWM_MASK 0b0011100000
+#define TIM1_CCER_PWM_MASK 0x1111
+#define TIM1_BDTR_PWM_MASK 0x8000
+#define TIM1_CCMR1_PWM_MASK 0b0111100001111000
+#define TIM1_CCMR2_PWM_MASK 0b0111100001111000
+
 void TIM1_voidInit();
 
 void TIM1_voidStart();
