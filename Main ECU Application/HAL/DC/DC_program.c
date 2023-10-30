@@ -6,33 +6,76 @@
 #include "../../MCAL/RCC/RCC_interface.h"
 #include "../../MCAL/RCC/RCC_private.h"
 
-void DC_voidInit(u8 port, u8 in1Pin, u8 in2Pin, u8 in3Pin, u8 in4Pin, u8 pwmChannel)
+void DC_voidInit()
 {
     RCC_voidEnablePeripheralClock(APB2_BUS, TIM1_RCC);
-    switch (port)
-    {
-    case DIOA:
-        RCC_voidEnablePeripheralClock(APB2_BUS, DIOA_RCC);
-        break;
-    case DIOB:
-        RCC_voidEnablePeripheralClock(APB2_BUS, DIOB_RCC);
-        break;
-    case DIOC:
-        RCC_voidEnablePeripheralClock(APB2_BUS, DIOC_RCC);
-        break;
-    }
-    MDIO_voidSetPinDirection(port, in1Pin, OUTPUT_SPEED_2MHZ_PP);
-    MDIO_voidSetPinDirection(port, in2Pin, OUTPUT_SPEED_2MHZ_PP);
-    MDIO_voidSetPinDirection(port, in3Pin, OUTPUT_SPEED_2MHZ_PP);
-    MDIO_voidSetPinDirection(port, in4Pin, OUTPUT_SPEED_2MHZ_PP);
-    /* PWM Pins (alternate function) to be completed
-    MDIO_voidSetPinDirection(DC_PORT, DC_ENA_PIN, OUTPUT_SPEED_2MHZ_PP);
-    MDIO_voidSetPinDirection(DC_PORT, DC_ENB_PIN, OUTPUT_SPEED_2MHZ_PP);
-    */
+    RCC_voidEnablePeripheralClock(APB2_BUS, DC_PORT_RCC);
+
+    MDIO_voidSetPinDirection(DC_PORT, DC_FRONT_IN1_PIN, OUTPUT_SPEED_2MHZ_PP);
+    MDIO_voidSetPinDirection(DC_PORT, DC_FRONT_IN2_PIN, OUTPUT_SPEED_2MHZ_PP);
+    MDIO_voidSetPinDirection(DC_PORT, DC_FRONT_IN3_PIN, OUTPUT_SPEED_2MHZ_PP);
+    MDIO_voidSetPinDirection(DC_PORT, DC_FRONT_IN4_PIN, OUTPUT_SPEED_2MHZ_PP);
+
+    MDIO_voidSetPinDirection(DC_PORT, DC_REAR_IN1_PIN, OUTPUT_SPEED_2MHZ_PP);
+    MDIO_voidSetPinDirection(DC_PORT, DC_REAR_IN2_PIN, OUTPUT_SPEED_2MHZ_PP);
+    MDIO_voidSetPinDirection(DC_PORT, DC_REAR_IN3_PIN, OUTPUT_SPEED_2MHZ_PP);
+    MDIO_voidSetPinDirection(DC_PORT, DC_REAR_IN4_PIN, OUTPUT_SPEED_2MHZ_PP);
+
+    MDIO_voidSetPinDirection(DC_PORT, PIN8, OUTPUT_SPEED_2MHZ_AFPP);
+    MDIO_voidSetPinDirection(DC_PORT, PIN9, OUTPUT_SPEED_2MHZ_AFPP);
+    MDIO_voidSetPinDirection(DC_PORT, PIN10, OUTPUT_SPEED_2MHZ_AFPP);
+    MDIO_voidSetPinDirection(DC_PORT, PIN11, OUTPUT_SPEED_2MHZ_AFPP);
+
     TIM1_voidInit();
 }
 
 void DC_voidSetSpeed(u8 pwmChannel, u8 speed)
 {
     TIM1_voidGeneratePwm(pwmChannel, speed / 100.0f);
+}
+
+void DC_voidStart(u8 motorNumber)
+{
+    switch (motorNumber)
+    {
+    case DC_FRONT_RIGHT_MOTOR:
+        MDIO_voidSetPinValue(DC_PORT, DC_FRONT_IN1_PIN, DIO_HIGH);
+        MDIO_voidSetPinValue(DC_PORT, DC_FRONT_IN2_PIN, DIO_LOW);
+        break;
+    case DC_FRONT_LEFT_MOTOR:
+        MDIO_voidSetPinValue(DC_PORT, DC_FRONT_IN3_PIN, DIO_HIGH);
+        MDIO_voidSetPinValue(DC_PORT, DC_FRONT_IN4_PIN, DIO_LOW);
+        break;
+    case DC_REAR_RIGHT_MOTOR:
+        MDIO_voidSetPinValue(DC_PORT, DC_REAR_IN1_PIN, DIO_HIGH);
+        MDIO_voidSetPinValue(DC_PORT, DC_REAR_IN2_PIN, DIO_LOW);
+        break;
+    case DC_REAR_LEFT_MOTOR:
+        MDIO_voidSetPinValue(DC_PORT, DC_REAR_IN3_PIN, DIO_HIGH);
+        MDIO_voidSetPinValue(DC_PORT, DC_REAR_IN4_PIN, DIO_LOW);
+        break;
+    }
+}
+
+void DC_voidStop(u8 motorNumber)
+{
+    switch (motorNumber)
+    {
+    case DC_FRONT_RIGHT_MOTOR:
+        MDIO_voidSetPinValue(DC_PORT, DC_FRONT_IN1_PIN, DIO_LOW);
+        MDIO_voidSetPinValue(DC_PORT, DC_FRONT_IN2_PIN, DIO_LOW);
+        break;
+    case DC_FRONT_LEFT_MOTOR:
+        MDIO_voidSetPinValue(DC_PORT, DC_FRONT_IN3_PIN, DIO_LOW);
+        MDIO_voidSetPinValue(DC_PORT, DC_FRONT_IN4_PIN, DIO_LOW);
+        break;
+    case DC_REAR_RIGHT_MOTOR:
+        MDIO_voidSetPinValue(DC_PORT, DC_REAR_IN1_PIN, DIO_LOW);
+        MDIO_voidSetPinValue(DC_PORT, DC_REAR_IN2_PIN, DIO_LOW);
+        break;
+    case DC_REAR_LEFT_MOTOR:
+        MDIO_voidSetPinValue(DC_PORT, DC_REAR_IN3_PIN, DIO_LOW);
+        MDIO_voidSetPinValue(DC_PORT, DC_REAR_IN4_PIN, DIO_LOW);
+        break;
+    }
 }
