@@ -12,6 +12,7 @@ void TIM1_voidInit()
     TIM1_BDTR |= TIM1_BDTR_PWM_MASK;
     TIM1_CCMR1 |= TIM1_CCMR1_PWM_MASK;
     TIM1_CCMR2 |= TIM1_CCMR2_PWM_MASK;
+    TIM1_ARR |= MASK_16_BITS;
 }
 
 void TIM1_voidStart()
@@ -40,16 +41,15 @@ void TIM1_voidGeneratePwm(u8 channel, f32 dutyCycle)
     switch (channel)
     {
     case PWM_CHANNEL_1:
-        TIM1_CCR1 |= compareValue;
+        TIM1_CCR1 = compareValue;
         break;
     case PWM_CHANNEL_2:
-        TIM1_CCR2 |= compareValue;
+        TIM1_CCR2 = compareValue;
         break;
     case PWM_CHANNEL_3:
-        TIM1_CCR3 |= compareValue;
+        TIM1_CCR3 = compareValue;
         break;
     case PWM_CHANNEL_4:
-        TIM1_CCR4 |= compareValue;
+        TIM1_CCR4 = compareValue;
     }
-    TIM1_voidStart();
 }
