@@ -1,7 +1,7 @@
-#include"DIO_interface.h"
+#include "DIO_interface.h"
 #include "DIO_private.h"
 #include "DIO_config.h"
-#include "BIT_MATH.h"
+#include "../../Common/bit_math.h"
 void MDIO_voidSetPinDirection  ( u8 Copy_u8Port , u8 Copy_u8Pin, u8 u8Copy_u8Mode)
 {
 switch(Copy_u8Port)	{
