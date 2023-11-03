@@ -1,9 +1,17 @@
 {
     "files.associations": {
         "usart_reg.h": "c",
-        "std_types.h": "c"
+        "std_types.h": "c",
+        "rcc_interface.h": "c",
+        "dio_interface.h": "c",
+        "rcc_private.h": "c",
+        "tim1_interface.h": "c",
+        "tim1_private.h": "c",
+        "dc_config.h": "c",
+        "dc_interface.h": "c"
     },
     "cSpell.words": [
-        "RXNE"
+        "RXNE",
+        "SMCR"
     ]
 }

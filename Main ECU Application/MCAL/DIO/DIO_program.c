@@ -169,11 +169,11 @@ void MDIO_voidSetPortValue(u8 Copy_u8Port, u8 Copy_u8Position, u16 Copy_u8Value)
 
 		if (Copy_u8Position == DIO_LOW)
 		{
-			GPIOA->ODR = (GPIOA->ODR & 0xFF00) | (Copy_u8Value);
+			GPIOA->ODR = (GPIOA->ODR & 0xFF00) | ((u8)Copy_u8Value);
 		}
 		else if (Copy_u8Position == DIO_HIGH)
 		{
-			GPIOA->ODR = (GPIOA->ODR & 0x00FF) | (Copy_u8Value);
+			GPIOA->ODR = (GPIOA->ODR & 0x00FF) | (Copy_u8Value << 8);
 		}
 
 		break;
@@ -185,7 +185,7 @@ void MDIO_voidSetPortValue(u8 Copy_u8Port, u8 Copy_u8Position, u16 Copy_u8Value)
 		}
 		else if (Copy_u8Position == DIO_HIGH)
 		{
-			GPIOB->ODR = (GPIOB->ODR & 0x00FF) | (Copy_u8Value);
+			GPIOB->ODR = (GPIOB->ODR & 0x00FF) | (Copy_u8Value << 8);
 		}
 
 		break;
@@ -197,7 +197,7 @@ void MDIO_voidSetPortValue(u8 Copy_u8Port, u8 Copy_u8Position, u16 Copy_u8Value)
 		}
 		else if (Copy_u8Position == DIO_HIGH)
 		{
-			GPIOC->ODR = (GPIOC->ODR & 0x00FF) | (Copy_u8Value);
+			GPIOC->ODR = (GPIOC->ODR & 0x00FF) | (Copy_u8Value) << 8;
 		}
 
 		break;
