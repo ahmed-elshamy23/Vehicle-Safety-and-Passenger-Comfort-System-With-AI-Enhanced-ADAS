@@ -1,0 +1,12 @@
+#ifndef SERVO_CONFIG_H
+#define SERVO_CONFIG_H
+
+#define SERVO_PORT DIOA
+#define SERVO_PORT_RCC DIOA_RCC
+
+#define SERVO_STEERING 0
+#define SERVO_RIGHT_MIRROR 1
+#define SERVO_LEFT_MIRROR 2
+#define SERVO_CHAIR 3
+
+#endif

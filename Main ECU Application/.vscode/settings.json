@@ -8,7 +8,10 @@
         "tim1_interface.h": "c",
         "tim1_private.h": "c",
         "dc_config.h": "c",
-        "dc_interface.h": "c"
+        "dc_interface.h": "c",
+        "tim2_interface.h": "c",
+        "tim2_config.h": "c",
+        "tim2_private.h": "c"
     },
     "cSpell.words": [
         "RXNE",
