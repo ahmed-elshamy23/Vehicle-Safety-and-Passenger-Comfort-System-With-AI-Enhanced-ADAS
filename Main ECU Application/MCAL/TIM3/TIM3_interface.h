@@ -3,6 +3,12 @@
 
 #include "../../Common/std_types.h"
 
+#define MASK_16_BITS 0xFFFF
+#define TIM3_CR1_NORMAL_MASK 0x0080
+#define TIM3_DIER_NORMAL_MASK 0x0001
+
+#define CLOCK 36000000UL
+
 void TIM3_voidInit();
 
 void TIM3_voidStart();
