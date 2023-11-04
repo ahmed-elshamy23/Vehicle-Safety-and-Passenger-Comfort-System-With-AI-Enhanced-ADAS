@@ -37,7 +37,7 @@ u16 TIM1_u16GetTimerValue()
 
 void TIM1_voidGeneratePwm(u8 channel, f32 dutyCycle)
 {
-    u16 compareValue = TIM1_MAX_VALUE * (1 - dutyCycle);
+    u16 compareValue = TIM1_MAX_VALUE * (1 - dutyCycle) - 1;
     switch (channel)
     {
     case PWM_CHANNEL_1:

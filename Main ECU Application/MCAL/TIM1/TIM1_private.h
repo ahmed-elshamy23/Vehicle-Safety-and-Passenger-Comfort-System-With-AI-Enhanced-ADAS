@@ -28,6 +28,6 @@
 #define PWM_CHANNEL_3 3
 #define PWM_CHANNEL_4 4
 
-#define TIM1_MAX_VALUE 65535
+#define TIM1_MAX_VALUE 65536
 
 #endif
