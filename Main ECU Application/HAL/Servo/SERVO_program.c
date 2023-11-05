@@ -19,4 +19,7 @@ void SERVO_voidInit()
     TIM2_voidInit();
 }
 
-void SERVO_voidSetAngle(u8 servoNumber, u16 angle);
+void SERVO_voidSetAngle(u8 servoNumber, u16 angle)
+{
+    TIM2_voidGeneratePwm(servoNumber, (1.0f / 3600) * angle + 0.05f);
+}
