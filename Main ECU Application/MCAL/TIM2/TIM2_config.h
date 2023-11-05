@@ -3,7 +3,7 @@
 
 #define SELECTED_TIMER TIMER2
 /********************* SELECT PRESCALER ********************/
-#define PRESCALER 36
+#define PRESCALER 6
 // in register of prescaler f=(f"sys"/ prescaler+1) prescaler=36-1=35
 /******************************************************************************
  *									PINS for channels	                				  *
