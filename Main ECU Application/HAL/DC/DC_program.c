@@ -9,7 +9,7 @@
 void DC_voidInit()
 {
     RCC_voidEnablePeripheralClock(APB2_BUS, TIM1_RCC);
-    RCC_voidEnablePeripheralClock(APB2_BUS, DC_PORT_RCC);
+    RCC_voidEnablePeripheralClock(APB2_BUS, DIOA_RCC);
 
     MDIO_voidSetPinDirection(DC_PORT, DC_FRONT_IN1_PIN, OUTPUT_SPEED_2MHZ_PP);
     MDIO_voidSetPinDirection(DC_PORT, DC_FRONT_IN2_PIN, OUTPUT_SPEED_2MHZ_PP);
@@ -21,10 +21,10 @@ void DC_voidInit()
     MDIO_voidSetPinDirection(DC_PORT, DC_REAR_IN3_PIN, OUTPUT_SPEED_2MHZ_PP);
     MDIO_voidSetPinDirection(DC_PORT, DC_REAR_IN4_PIN, OUTPUT_SPEED_2MHZ_PP);
 
-    MDIO_voidSetPinDirection(DC_PORT, PIN8, OUTPUT_SPEED_50MHZ_AFPP);
-    MDIO_voidSetPinDirection(DC_PORT, PIN9, OUTPUT_SPEED_50MHZ_AFPP);
-    MDIO_voidSetPinDirection(DC_PORT, PIN10, OUTPUT_SPEED_50MHZ_AFPP);
-    MDIO_voidSetPinDirection(DC_PORT, PIN11, OUTPUT_SPEED_50MHZ_AFPP);
+    MDIO_voidSetPinDirection(DIOA_RCC, PIN8, OUTPUT_SPEED_50MHZ_AFPP);
+    MDIO_voidSetPinDirection(DIOA_RCC, PIN9, OUTPUT_SPEED_50MHZ_AFPP);
+    MDIO_voidSetPinDirection(DIOA_RCC, PIN10, OUTPUT_SPEED_50MHZ_AFPP);
+    MDIO_voidSetPinDirection(DIOA_RCC, PIN11, OUTPUT_SPEED_50MHZ_AFPP);
 
     TIM1_voidInit();
 }
