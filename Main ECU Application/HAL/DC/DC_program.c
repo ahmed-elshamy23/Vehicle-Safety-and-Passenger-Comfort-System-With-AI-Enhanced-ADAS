@@ -10,11 +10,12 @@ void DC_voidInit()
 {
     RCC_voidEnablePeripheralClock(APB2_BUS, TIM1_RCC);
     RCC_voidEnablePeripheralClock(APB2_BUS, DIOA_RCC);
+    RCC_voidEnablePeripheralClock(APB2_BUS, DC_PORT_RCC);
 
     MDIO_voidSetPinDirection(DC_PORT, DC_IN1_PIN, OUTPUT_SPEED_2MHZ_PP);
     MDIO_voidSetPinDirection(DC_PORT, DC_IN2_PIN, OUTPUT_SPEED_2MHZ_PP);
 
-    MDIO_voidSetPinDirection(DIOA_RCC, PIN8, OUTPUT_SPEED_50MHZ_AFPP);
+    MDIO_voidSetPinDirection(DIOA, PIN8, OUTPUT_SPEED_50MHZ_AFPP);
 
     TIM1_voidInit();
 }
