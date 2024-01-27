@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "dio_private.h": "c",
+        "dio_interface.h": "c",
+        "rcc_interface.h": "c",
+        "led_interface.h": "c",
+        "ultrasonic_interface.h": "c"
+    }
+}
