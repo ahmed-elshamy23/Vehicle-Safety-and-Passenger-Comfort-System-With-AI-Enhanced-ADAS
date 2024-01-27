@@ -14,6 +14,8 @@
 #include "../Services/FreeRTOS.h"
 #include "../Services/task.h"
 
+// Reed switch to be added
+
 static f32 distance = 40.0f, speed = 0.1f;
 
 void appInit()
