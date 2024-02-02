@@ -1,0 +1,2 @@
+../Core/Src/ULTRASONIC_program.c:8:6:ULTRASONIC_voidInit	8	static
+../Core/Src/ULTRASONIC_program.c:17:5:ULTRASONIC_f32GetDistance	8	static

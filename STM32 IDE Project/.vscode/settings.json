@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "tim1_interface.h": "c",
+        "stm32f1xx_hal_tim.h": "c",
+        "stm32f1xx_hal_def.h": "c",
+        "rcc_interface.h": "c",
+        "tim3_interface.h": "c",
+        "usart_interface.h": "c"
+    }
+}

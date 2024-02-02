@@ -1,0 +1,2 @@
+../Core/Src/SWITCH_program.c:7:6:SWITCH_voidInit	16	static
+../Core/Src/SWITCH_program.c:33:4:SWITCH_u8SwitchIsOn	8	static

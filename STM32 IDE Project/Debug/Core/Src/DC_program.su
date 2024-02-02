@@ -1,0 +1,4 @@
+../Core/Src/DC_program.c:9:6:DC_voidInit	8	static
+../Core/Src/DC_program.c:32:6:DC_voidSetSpeed	16	static
+../Core/Src/DC_program.c:41:6:DC_voidStart	8	static
+../Core/Src/DC_program.c:64:6:DC_voidStop	8	static
