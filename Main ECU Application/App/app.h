@@ -20,8 +20,6 @@ void getDistance();
 
 void updateSpeedAndDirection();
 
-void checkReedSwitch();
-
 void receiveUartFrame();
 
 #endif

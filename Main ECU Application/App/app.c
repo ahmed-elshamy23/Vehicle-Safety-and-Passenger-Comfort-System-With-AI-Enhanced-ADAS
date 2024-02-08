@@ -103,23 +103,6 @@ void updateSpeedAndDirection()
     }
 }
 
-void checkReedSwitch()
-{
-    TickType_t xLastWakeTime;
-    const TickType_t xFrequency = 10;
-    xLastWakeTime = xTaskGetTickCount();
-    while (1)
-    {
-        if (SWITCH_u8SwitchIsOn(DIOB, PIN8))
-        {
-            LED_voidState(DIOA, PIN6, DIO_HIGH);
-            DC_voidStop();
-            vTaskEndScheduler();
-        }
-        vTaskDelayUntil(&xLastWakeTime, xFrequency);
-    }
-}
-
 void receiveUartFrame()
 {
     u8 data = EMPTY_DATA;
