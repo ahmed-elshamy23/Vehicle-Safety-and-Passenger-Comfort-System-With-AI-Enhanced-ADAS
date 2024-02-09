@@ -1,10 +1,10 @@
 from face_reco import *
 
 # Load pre-trained Haar cascade classifier for eye detection from OpenCV
-eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
+eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml")
 
 # Initialize webcam
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 # Define a baseline or standard pupil size (you may need to calibrate this based on your specific conditions)
 standard_pupil_size = 50  # Adjust this value as needed
@@ -15,7 +15,7 @@ alert_duration = 2  # Set the duration threshold for fatigue alert in seconds
 
 # Initialize pygame for playing the alarm sound
 pygame.init()
-alarm_sound = pygame.mixer.Sound("E:\warn.wav")  
+alarm_sound = pygame.mixer.Sound("E:\warn.wav")
 
 # Initialize MQTT client
 mqtt_client = mqtt.Client()
@@ -24,10 +24,12 @@ mqtt_client = mqtt.Client()
 mqtt_broker = "mqtt.eclipseprojects.io"
 mqtt_topic = "fatigue_detection"
 
+
 def send_mqtt_message(message):
     mqtt_client.connect(mqtt_broker)
     mqtt_client.publish(mqtt_topic, message)
     mqtt_client.disconnect()
+
 
 while True:
     ret, frame = cap.read()
@@ -39,7 +41,7 @@ while True:
     eyes = eye_cascade.detectMultiScale(gray)
 
     # Iterate through detected eyes
-    for (ex, ey, ew, eh) in eyes:
+    for ex, ey, ew, eh in eyes:
         # Calculate pupil size (here, we use the width of the eye bounding box as an approximation)
         pupil_size = ew
 
@@ -52,7 +54,6 @@ while True:
                 pygame.mixer.Sound.play(alarm_sound)
                 # Send MQTT message
                 send_mqtt_message("0x11")
-                
 
         else:
             status = "normal"
@@ -60,14 +61,30 @@ while True:
             start_time = time.time()
 
         # Display the frame with annotations
-        cv2.putText(frame, f"Pupil Size: {pupil_size}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-        cv2.putText(frame, f"Status: {status}", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        cv2.putText(
+            frame,
+            f"Pupil Size: {pupil_size}",
+            (50, 50),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1,
+            (0, 255, 0),
+            2,
+        )
+        cv2.putText(
+            frame,
+            f"Status: {status}",
+            (50, 100),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1,
+            (0, 0, 255),
+            2,
+        )
 
     # Display the frame
     cv2.imshow("Frame", frame)
 
     # Break the loop when 'q' key is pressed
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
 # Release the webcam and close all windows
