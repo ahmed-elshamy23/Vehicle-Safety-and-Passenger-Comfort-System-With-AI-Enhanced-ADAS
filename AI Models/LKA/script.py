@@ -13,9 +13,6 @@ def region(image):
     mask = cv2.bitwise_and(image, mask)
     return mask
 
-
-
-
 def display_lines(image, lines):
     lines_image = np.copy(image)  # Create a copy of the original image
     if lines is not None:
