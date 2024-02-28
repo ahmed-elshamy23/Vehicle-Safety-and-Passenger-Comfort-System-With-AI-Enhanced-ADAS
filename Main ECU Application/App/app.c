@@ -5,8 +5,6 @@
 #include "../MCAL/USART/USART_interface.h"
 #include "../MCAL/TIM2/TIM2_interface.h"
 #include "../HAL/DC/DC_interface.h"
-#include "../HAL/LED/LED_interface.h"
-#include "../HAL/Switch/SWITCH_interface.h"
 #include "../HAL/Servo/SERVO_interface.h"
 #include "../HAL/Servo/SERVO_config.h"
 #include "../HAL/Ultrasonic/ULTRASONIC_interface.h"
@@ -14,10 +12,12 @@
 #include "../Services/FreeRTOS.h"
 #include "../Services/task.h"
 
-static f32 distance = 40.0f, speed = INITIAL_SPEED;
+static f32 distance = 4.0f;
+static s8 speed = INITIAL_SPEED;
 
 void appInit()
 {
+    RCC_voidInitSysClock();
     RCC_voidEnablePeripheralClock(APB2_BUS, DIOA_RCC);
     RCC_voidEnablePeripheralClock(APB2_BUS, DIOB_RCC);
     RCC_voidEnablePeripheralClock(APB2_BUS, USART1_RCC);
@@ -25,20 +25,21 @@ void appInit()
     RCC_voidEnablePeripheralClock(APB1_BUS, TIM2_RCC);
     RCC_voidEnablePeripheralClock(APB1_BUS, TIM3_RCC);
 
-    MDIO_voidSetPinDirection(DIOA, PIN9, OUTPUT_SPEED_50MHZ_PP);
     MDIO_voidSetPinDirection(DIOA, PIN10, INPUT_FLOATING);
 
     USART_voidInit();
     DC_voidInit();
-    LED_voidInit(DIOA, PIN6);
     SERVO_voidInit();
-    SWITCH_voidInit(DIOB, PIN8, PULLDOWN_RESISTOR);
     ULTRASONIC_voidInit();
 }
 
 void applyDriverProfile()
 {
-    u8 driver = USART_u8ReceiveData();
+    u8 driver;
+    do
+    {
+        driver = USART_u8ReceiveData();
+    } while (driver == EMPTY_DATA);
     if (driver == DRIVER_1)
     {
         SERVO_voidSetAngle(SERVO_RIGHT_MIRROR, 20);
@@ -63,7 +64,7 @@ void applyDriverProfile()
 void getDistance()
 {
     TickType_t xLastWakeTime;
-    const TickType_t xFrequency = 10;
+    const TickType_t xFrequency = 70;
     xLastWakeTime = xTaskGetTickCount();
     while (1)
     {
@@ -79,16 +80,21 @@ void updateSpeedAndDirection()
     xLastWakeTime = xTaskGetTickCount();
     while (1)
     {
+        // processing distance and changing speed
         if (distance <= ACC_THRESHOLD)
-            speed -= 0.2f;
+            speed -= 20;
         else if (distance <= AEB_THRESHOLD)
-            speed = 0.0f;
+            speed = 0;
         else
-            speed += 0.1f;
-        if (speed > 1.0f)
-            speed = 1.0f;
+            speed += 10;
+
+        // keeping speed in the range [0, MAX_SPEED]
+        if (speed > MAX_SPEED)
+            speed = MAX_SPEED;
         else if (speed < 0.0f)
             speed = 0.0f;
+
+        // applying speed changes
         if (speed)
         {
             DC_voidStart();

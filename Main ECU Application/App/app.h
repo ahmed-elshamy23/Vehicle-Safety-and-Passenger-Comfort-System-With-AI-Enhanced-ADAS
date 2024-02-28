@@ -1,10 +1,11 @@
 #ifndef APP_H
 #define APP_H
 
-#define ACC_THRESHOLD 5.0f
-#define AEB_THRESHOLD 2.0f
+#define ACC_THRESHOLD 2.5f
+#define AEB_THRESHOLD 0.8f
 
-#define INITIAL_SPEED 0.1f
+#define INITIAL_SPEED 10
+#define MAX_SPEED 50
 
 #define DRIVER_1 1
 #define DRIVER_2 2
