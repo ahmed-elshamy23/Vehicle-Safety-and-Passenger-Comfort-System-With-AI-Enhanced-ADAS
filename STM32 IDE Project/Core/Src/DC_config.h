@@ -1,22 +1,10 @@
 #ifndef DC_CONFIG_H
 #define DC_CONFIG_H
 
-#define DC_PORT_RCC DIOA_RCC
-#define DC_PORT DIOA
+#define DC_PORT_RCC DIOB_RCC
+#define DC_PORT DIOB
 
-#define DC_FRONT_IN1_PIN PIN0
-#define DC_FRONT_IN2_PIN PIN1
-#define DC_FRONT_IN3_PIN PIN2
-#define DC_FRONT_IN4_PIN PIN3
-
-#define DC_REAR_IN1_PIN PIN4
-#define DC_REAR_IN2_PIN PIN5
-#define DC_REAR_IN3_PIN PIN6
-#define DC_REAR_IN4_PIN PIN7
-
-#define DC_FRONT_RIGHT_MOTOR 0
-#define DC_FRONT_LEFT_MOTOR 1
-#define DC_REAR_RIGHT_MOTOR 2
-#define DC_REAR_LEFT_MOTOR 3
+#define DC_IN1_PIN PIN0
+#define DC_IN2_PIN PIN1
 
 #endif

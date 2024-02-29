@@ -12,7 +12,7 @@ void USART_voidInit()
 u8 USART_u8ReceiveData()
 {
     if (GET_BIT(USART_SR, RXNE_BIT))
-        return USART_DR << 24;
+        return USART_DR & 0xFF;
     else
         return EMPTY_DATA;
 }

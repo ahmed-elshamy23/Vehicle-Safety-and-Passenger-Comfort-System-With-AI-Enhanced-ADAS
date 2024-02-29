@@ -5,6 +5,21 @@
         "stm32f1xx_hal_def.h": "c",
         "rcc_interface.h": "c",
         "tim3_interface.h": "c",
-        "usart_interface.h": "c"
+        "usart_interface.h": "c",
+        "dio_interface.h": "c",
+        "dc_interface.h": "c",
+        "dc_config.h": "c",
+        "dio_private.h": "c",
+        "tim2_interface.h": "c",
+        "servo_interface.h": "c",
+        "servo_config.h": "c",
+        "led_interface.h": "c",
+        "tim3_config.h": "c",
+        "std_types.h": "c",
+        "tim3_private.h": "c",
+        "ultrasonic_interface.h": "c",
+        "ultrasonic_config.h": "c",
+        "bit_math.h": "c",
+        "freertos.h": "c"
     }
 }

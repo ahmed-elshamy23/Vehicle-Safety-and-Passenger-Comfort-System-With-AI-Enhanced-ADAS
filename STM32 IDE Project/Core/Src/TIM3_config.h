@@ -1,6 +1,6 @@
 #ifndef TIM3_CONFIG_H
 #define TIM3_CONFIG_H
 
-#define TIM3_PRESCALER 36
+#define TIM3_PRESCALER 72
 
 #endif

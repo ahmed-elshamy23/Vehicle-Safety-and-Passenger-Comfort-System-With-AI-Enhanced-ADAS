@@ -5,34 +5,34 @@
 #include "../common/std_types.h"
 #include "../common/bit_math.h"
 
-TIM_HandleTypeDef htim3;
+TIM_HandleTypeDef htim33;
 TIM_ClockConfigTypeDef sClockSourceConfig3 = {0};
 TIM_MasterConfigTypeDef sMasterConfig3 = {0};
 
 void TIM3_voidInit()
 {
-    htim3.Instance = TIM3;
-    htim3.Init.Prescaler = 36;
-    htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim3.Init.Period = 65535;
-    htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-    htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-    HAL_TIM_Base_Init(&htim3);
+    htim33.Instance = TIM3;
+    htim33.Init.Prescaler = 72;
+    htim33.Init.CounterMode = TIM_COUNTERMODE_UP;
+    htim33.Init.Period = 65535;
+    htim33.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+    htim33.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+    HAL_TIM_Base_Init(&htim33);
     sClockSourceConfig3.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-    HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig3);
+    HAL_TIM_ConfigClockSource(&htim33, &sClockSourceConfig3);
     sMasterConfig3.MasterOutputTrigger = TIM_TRGO_RESET;
     sMasterConfig3.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-    HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig3);
+    HAL_TIMEx_MasterConfigSynchronization(&htim33, &sMasterConfig3);
 }
 
 void TIM3_voidStart()
 {
-    HAL_TIM_Base_Start(&htim3);
+    HAL_TIM_Base_Start(&htim33);
 }
 
 void TIM3_voidStop()
 {
-    HAL_TIM_Base_Stop(&htim3);
+    HAL_TIM_Base_Stop(&htim33);
 }
 
 void TIM3_voidSetTimerValue(u16 value)

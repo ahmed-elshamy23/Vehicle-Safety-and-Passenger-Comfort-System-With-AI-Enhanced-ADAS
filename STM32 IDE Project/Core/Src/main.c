@@ -1,28 +1,20 @@
-#include "TIM2_interface.h"
-#include "TIM2_private.h"
-#include "TIM3_interface.h"
-#include "DIO_interface.h"
-#include "DIO_private.h"
-#include "RCC_interface.h"
-#include "USART_interface.h"
+#include "app.h"
+#include "../../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h"
+#include "../../Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
+#include "DC_interface.h"
 
-u8 data;
-
-int main(void)
+int main()
 {
-  RCC_voidInitSysClock();
+  appInit();
+  applyDriverProfile();
+  DC_voidSetSpeed(INITIAL_SPEED);
+  DC_voidStart();
 
-  USART_voidInit();
+  xTaskCreate(getDistance, "Measuring Distance", configMINIMAL_STACK_SIZE, NULL, 3, NULL);
+  xTaskCreate(updateSpeedAndDirection, "Managing AEB and ACC", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+  xTaskCreate(receiveUartFrame, "Receiving Frames from ESP32", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
 
-  MDIO_voidSetPinDirection(DIOA, PIN9, OUTPUT_SPEED_50MHZ_AFPP);
-  MDIO_voidSetPinDirection(DIOA, PIN10, OUTPUT_SPEED_50MHZ_AFPP);
-
-  RCC_voidEnablePeripheralClock(APB1_BUS, TIM2_RCC);
-  RCC_voidEnablePeripheralClock(APB1_BUS, TIM3_RCC);
-  RCC_voidEnablePeripheralClock(APB2_BUS, USART1_RCC);
-
+  vTaskStartScheduler();
   while (1)
-  {
-    data = USART_u8ReceiveData();
-  }
+    ;
 }
