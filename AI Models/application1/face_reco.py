@@ -68,6 +68,10 @@ for encodeface, faceloc in zip(encodeCurrnetFrame, faceCurrentFram):
         elif name == "Will smith":
             client.publish("esp/subtopic", "03")
 
-    cv2.imshow("Face recognition", img)
-    cv2.waitKey(1)
-    cap.release()
+        # Close the window after recognition
+        break    
+
+      cv2.imshow("Face recognition", img)
+# Close the video capture
+cap.release()
+cv2.destroyAllWindows()
