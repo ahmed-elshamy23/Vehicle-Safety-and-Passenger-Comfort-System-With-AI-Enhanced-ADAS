@@ -5,3 +5,5 @@ import os
 import paho.mqtt.client as mqtt
 import time
 import pygame
+import mediapipe as mp
+from scipy.spatial import distance
