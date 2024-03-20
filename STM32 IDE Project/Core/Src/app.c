@@ -15,7 +15,7 @@
 
 static f32 distance = 4.0f;
 static s8 speed = INITIAL_SPEED;
-static volatile u8 data = EMPTY_DATA;
+static volatile u8 data = EMPTY_DATA, angle = INITIAL_ANGLE;
 
 void appInit()
 {
@@ -108,7 +108,8 @@ void updateSpeedAndDirection()
         else
             DC_voidStop();
 
-        // direction controls to be added
+        // adjusting steering angle
+        SERVO_voidSetAngle(SERVO_STEERING, angle);
 
         vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
@@ -129,10 +130,9 @@ void receiveUartFrame()
                 DC_voidStop();
                 vTaskEndScheduler();
             }
+            else if (data >= 0 && data <= 180)
+                angle = data;
         }
-
-        // direction controls to be received
-
         vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
 }
