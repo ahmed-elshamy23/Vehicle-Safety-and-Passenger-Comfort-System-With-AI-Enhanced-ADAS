@@ -3,7 +3,7 @@ import time
 import pygame
 
 # Load pre-trained Haar cascade classifier for eye detection from OpenCV
-eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
+eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_eye.xml")
 
 # Initialize webcam
 cap = cv2.VideoCapture(0)
@@ -17,7 +17,7 @@ alert_duration = 2  # Set the duration threshold for fatigue alert in seconds
 
 # Initialize pygame for playing the alarm sound
 pygame.init()
-alarm_sound = pygame.mixer.Sound("E:\warn.wav")  
+alarm_sound = pygame.mixer.Sound("E:\warn.wav")
 
 while True:
     ret, frame = cap.read()
@@ -29,7 +29,7 @@ while True:
     eyes = eye_cascade.detectMultiScale(gray)
 
     # Iterate through detected eyes
-    for (ex, ey, ew, eh) in eyes:
+    for ex, ey, ew, eh in eyes:
         # Calculate pupil size (here, we use the width of the eye bounding box as an approximation)
         pupil_size = ew
 
@@ -40,7 +40,6 @@ while True:
             if time.time() - start_time > alert_duration:
                 # Play the alarm sound
                 pygame.mixer.Sound.play(alarm_sound)
-                
 
         else:
             status = "normal"
@@ -48,14 +47,30 @@ while True:
             start_time = time.time()
 
         # Display the frame with annotations
-        cv2.putText(frame, f"Pupil Size: {pupil_size}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-        cv2.putText(frame, f"Status: {status}", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        cv2.putText(
+            frame,
+            f"Pupil Size: {pupil_size}",
+            (50, 50),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1,
+            (0, 255, 0),
+            2,
+        )
+        cv2.putText(
+            frame,
+            f"Status: {status}",
+            (50, 100),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1,
+            (0, 0, 255),
+            2,
+        )
 
     # Display the frame
     cv2.imshow("Frame", frame)
 
     # Break the loop when 'q' key is pressed
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
 # Release the webcam and close all windows

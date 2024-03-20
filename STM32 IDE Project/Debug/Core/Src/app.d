@@ -3,9 +3,9 @@ Core/Src/app.o: ../Core/Src/app.c ../Core/Src/app.h \
  ../Core/Src/DIO_interface.h ../Core/Src/DIO_private.h \
  ../Core/Src/USART_interface.h ../Core/Src/TIM2_interface.h \
  ../Core/Src/TIM2_private.h ../Core/Src/TIM2_config.h \
- ../Core/Src/../Common/bit_math.h ../Core/Src/DC_interface.h \
- ../Core/Src/SERVO_interface.h ../Core/Src/SERVO_config.h \
- ../Core/Src/ULTRASONIC_interface.h \
+ ../Core/Src/../Common/bit_math.h ../Core/Src/TIM3_interface.h \
+ ../Core/Src/DC_interface.h ../Core/Src/SERVO_interface.h \
+ ../Core/Src/SERVO_config.h ../Core/Src/ULTRASONIC_interface.h \
  ../Core/Src/../../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../Core/Inc/FreeRTOSConfig.h \
  ../Core/Src/../../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h \
@@ -25,6 +25,7 @@ Core/Src/app.o: ../Core/Src/app.c ../Core/Src/app.h \
 ../Core/Src/TIM2_private.h:
 ../Core/Src/TIM2_config.h:
 ../Core/Src/../Common/bit_math.h:
+../Core/Src/TIM3_interface.h:
 ../Core/Src/DC_interface.h:
 ../Core/Src/SERVO_interface.h:
 ../Core/Src/SERVO_config.h:

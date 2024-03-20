@@ -20,6 +20,8 @@
         "ultrasonic_interface.h": "c",
         "ultrasonic_config.h": "c",
         "bit_math.h": "c",
-        "freertos.h": "c"
+        "freertos.h": "c",
+        "portable.h": "c",
+        "app.h": "c"
     }
 }
