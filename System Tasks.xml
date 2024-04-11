@@ -7,8 +7,8 @@
 	</processors>
 	<tasks>
 		<field name="priority" type="int"/>
-		<task ACET="0" WCET="50.0" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="200.0" et_stddev="0" id="1" instructions="0" list_activation_dates="" mix="0.5" name="Ultrasonic" period="200.0" preemption_cost="0" priority="3" task_type="Periodic"/>
-		<task ACET="0" WCET="3.0" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="100.0" et_stddev="0" id="2" instructions="0" list_activation_dates="" mix="0.5" name="Speed" period="100.0" preemption_cost="0" priority="2" task_type="Periodic"/>
-		<task ACET="0" WCET="5.0" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="100.0" et_stddev="0" id="3" instructions="0" list_activation_dates="" mix="0.5" name="UART" period="100.0" preemption_cost="0" priority="1" task_type="Periodic"/>
+		<task ACET="0.0" WCET="50.0" abort_on_miss="yes" activationDate="0.0" base_cpi="1.0" deadline="200.0" et_stddev="0.0" id="1" instructions="0" list_activation_dates="" mix="0.5" name="Ultrasonic" period="200.0" preemption_cost="0" priority="3" task_type="Periodic"/>
+		<task ACET="0.0" WCET="3.0" abort_on_miss="yes" activationDate="0.0" base_cpi="1.0" deadline="100.0" et_stddev="0.0" id="2" instructions="0" list_activation_dates="" mix="0.5" name="Speed" period="100.0" preemption_cost="0" priority="2" task_type="Periodic"/>
+		<task ACET="0.0" WCET="5.0" abort_on_miss="yes" activationDate="0.0" base_cpi="1.0" deadline="100.0" et_stddev="0.0" id="3" instructions="0" list_activation_dates="" mix="0.5" name="UART" period="100.0" preemption_cost="0" priority="1" task_type="Periodic"/>
 	</tasks>
 </simulation>
