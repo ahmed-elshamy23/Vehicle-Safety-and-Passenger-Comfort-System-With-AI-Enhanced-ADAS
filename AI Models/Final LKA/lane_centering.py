@@ -394,6 +394,10 @@ def draw_lines(img, lines, top_y, bottom_y, offset_file, control_actions_file):
             2,
             cv2.LINE_AA,
         )
+        if steering_angle >= 135:
+            steering_angle = 135
+        elif steering_angle <= 45:
+            steering_angle = 45
         client.publish("esp/subtopic", int(steering_angle))
     else:
         # Optionally handle cases where one or neither lane is detected

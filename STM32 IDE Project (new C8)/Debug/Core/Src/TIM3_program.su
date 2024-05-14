@@ -1,0 +1,6 @@
+../Core/Src/TIM3_program.c:12:6:TIM3_voidInit	8	static
+../Core/Src/TIM3_program.c:28:6:TIM3_voidStart	8	static
+../Core/Src/TIM3_program.c:33:6:TIM3_voidStop	8	static
+../Core/Src/TIM3_program.c:38:6:TIM3_voidSetTimerValue	16	static
+../Core/Src/TIM3_program.c:43:5:TIM3_u16GetTimerValue	4	static
+../Core/Src/TIM3_program.c:48:6:TIM3_voidDelay	40	static

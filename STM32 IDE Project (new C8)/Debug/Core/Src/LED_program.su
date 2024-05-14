@@ -1,0 +1,2 @@
+../Core/Src/LED_program.c:6:6:LED_voidInit	16	static
+../Core/Src/LED_program.c:12:6:LED_voidState	16	static

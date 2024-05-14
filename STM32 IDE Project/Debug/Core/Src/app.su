@@ -1,5 +1,0 @@
-../Core/Src/app.c:20:6:appInit	8	static
-../Core/Src/app.c:41:6:applyDriverProfile	8	static
-../Core/Src/app.c:69:6:getDistance	16	static
-../Core/Src/app.c:81:6:updateSpeedAndDirection	40	static
-../Core/Src/app.c:117:6:receiveUartFrame	16	static

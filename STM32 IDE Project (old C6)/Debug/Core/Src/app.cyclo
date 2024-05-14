@@ -1,0 +1,5 @@
+../Core/Src/app.c:20:6:appInit	1
+../Core/Src/app.c:41:6:applyDriverProfile	4
+../Core/Src/app.c:69:6:getDistance	1
+../Core/Src/app.c:81:6:updateSpeedAndDirection	6
+../Core/Src/app.c:118:6:receiveUartFrame	4

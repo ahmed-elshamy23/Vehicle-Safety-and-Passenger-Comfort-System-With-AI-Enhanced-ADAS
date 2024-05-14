@@ -1,6 +1,7 @@
 #include "esp_camera.h"
 #include <WiFi.h>
 #include <PubSubClient.h>
+#include <stdlib.h>
 
 //
 // WARNING!!! PSRAM IC required for UXGA resolution and high JPEG quality
@@ -33,10 +34,10 @@
 //#define CAMERA_MODEL_DFRobot_Romeo_ESP32S3 // Has PSRAM
 #include "camera_pins.h"
 
-const char* ssid = "Galaxy M31";
-const char* pass = "qehn1852";
+const char* ssid = "Orange-Orange";
+const char* pass = "26072015Mm#";
 const char* ClientID = "**********";
-const char* broker = "mqtt.eclipseprojects.io";
+const char* broker = "192.168.1.12";
 const char* topic = "esp/subtopic";
 
 WiFiClient espClient;
@@ -45,26 +46,26 @@ PubSubClient client(espClient);
 /***************************************connecting wifi and mqtt****************************************************/
 void setupWifi(){
  delay(100); 
- Serial.print("\nConnecting to"); 
- Serial.println(ssid); 
+//  Serial.print("\nConnecting to"); 
+//  Serial.println(ssid); 
  WiFi.begin(ssid, pass); 
  while(WiFi.status() != WL_CONNECTED) 
  { 
    delay(100); 
-   Serial.print("-");
+  //  Serial.print("-");
   }
- Serial.print("\nConnected to ");
- Serial.println(ssid);
+//  Serial.print("\nConnected to ");
+//  Serial.println(ssid);
 }
 
 void reconnect() {
   while (!client.connected()) {
     if (client.connect(ClientID)) {
-      Serial.println("\nConnected to");
-      Serial.println(broker);
+      // Serial.println("\nConnected to");
+      // Serial.println(broker);
       client.subscribe(topic);
     } else {
-      Serial.println("\nTrying connect again");
+      // Serial.println("\nTrying connect again");
       delay(5000);
     }
   }
@@ -75,13 +76,12 @@ void Callback(char* topic, byte* payload, unsigned int length){
   // Serial.print("Rcieved message: ");
   // Serial.println(topic);
   int i = 0, receivedNumber = 0;
-  while(payload[i] != '\0')
+  while(i < length)
   {
     receivedNumber = receivedNumber * 10 + payload[i] - '0';
     i++;
   }
-  Serial.write(receivedNumber);
-  // Serial.println();
+  Serial.write(receivedNumber - 13);
 }
 
 void startCameraServer();
@@ -91,8 +91,8 @@ void setup() {
   Serial.begin(9600); //serial monitor
   //Serial1.begin(9600); //UART serial line
 
-  Serial.setDebugOutput(true);
-  Serial.println();
+  Serial.setDebugOutput(false);
+  // Serial.println();
   setupWifi();
   client.setServer(broker ,1883);
   client.setCallback(Callback);
@@ -153,7 +153,7 @@ void setup() {
   // camera init
   esp_err_t err = esp_camera_init(&config);
   if (err != ESP_OK) {
-    Serial.printf("Camera init failed with error 0x%x", err);
+    // Serial.printf("Camera init failed with error 0x%x", err);
     return;
   }
 
@@ -185,9 +185,9 @@ void setup() {
 
   startCameraServer();
 
-  Serial.print("Camera Ready! Use 'http://");
-  Serial.print(WiFi.localIP());
-  Serial.println("' to connect");
+  // Serial.print("Camera Ready! Use 'http://");
+  // Serial.print(WiFi.localIP());
+  // Serial.println("' to connect");
 }
 
 void loop() {

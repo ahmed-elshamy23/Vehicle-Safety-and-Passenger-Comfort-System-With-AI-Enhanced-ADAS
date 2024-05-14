@@ -5,6 +5,7 @@
         "rcc_interface.h": "c",
         "led_interface.h": "c",
         "ultrasonic_interface.h": "c",
-        "tim2_interface.h": "c"
+        "tim2_interface.h": "c",
+        "servo_config.h": "c"
     }
 }

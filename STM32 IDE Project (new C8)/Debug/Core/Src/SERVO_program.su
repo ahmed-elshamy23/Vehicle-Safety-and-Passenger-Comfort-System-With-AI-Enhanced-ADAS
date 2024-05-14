@@ -1,0 +1,2 @@
+../Core/Src/SERVO_program.c:9:6:SERVO_voidInit	8	static
+../Core/Src/SERVO_program.c:22:6:SERVO_voidSetAngle	16	static

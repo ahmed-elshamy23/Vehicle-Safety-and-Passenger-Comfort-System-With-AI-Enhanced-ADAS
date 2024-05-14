@@ -1,0 +1,2 @@
+../Core/Src/USART_program.c:5:6:USART_voidInit	1
+../Core/Src/USART_program.c:12:4:USART_u8ReceiveData	2
