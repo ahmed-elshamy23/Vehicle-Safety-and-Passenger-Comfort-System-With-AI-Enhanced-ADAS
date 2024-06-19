@@ -35,7 +35,7 @@ SETPOINT_WEIGHTS = (
 # Input can either be a video on disk, or a live video stream from a USB camera
 # Video files are stored in the test_videos directory.
 # See the very bottom of the script for the list of available videos.
-VIDEO_OR_CAMERA = "video"  # "video" or "camera"
+VIDEO_OR_CAMERA = "camera"  # "video" or "camera"
 
 # ROAD WIDTH
 ROAD_WIDTH = 3.7  # meters
@@ -498,7 +498,10 @@ def process_video(video_path):
     Parameters:
     - video_path: Path to the video file.
     """
-    video_capture = cv2.VideoCapture(video_path if VIDEO_OR_CAMERA == "video" else 0)
+    if VIDEO_OR_CAMERA == "video":
+        video_capture = cv2.VideoCapture(video_path)
+    else:
+        video_capture = cv2.VideoCapture("http://192.168.1.8:81/stream")
     if not video_capture.isOpened():
         raise IOError(f"Cannot open video {video_path}")
 
