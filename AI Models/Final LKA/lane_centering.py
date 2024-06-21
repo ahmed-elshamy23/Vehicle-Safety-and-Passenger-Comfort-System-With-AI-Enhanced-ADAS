@@ -388,9 +388,9 @@ def draw_lines(img, lines, top_y, bottom_y, offset_file, control_actions_file):
         cv2.putText(
             img,
             f"Required Steering Angle: {int(steering_angle)}",
-            (50, 50),
+            (10, 25),
             cv2.FONT_HERSHEY_SIMPLEX,
-            1,
+            0.5,
             (255, 255, 255),
             2,
             cv2.LINE_AA,
@@ -408,9 +408,9 @@ def draw_lines(img, lines, top_y, bottom_y, offset_file, control_actions_file):
     cv2.putText(
         img,
         f"{abs_deviation_meters:.2f} m {deviation_direction} of center",
-        (50, 90),
+        (10, 65),
         cv2.FONT_HERSHEY_SIMPLEX,
-        1,
+        0.5,
         (255, 255, 255),
         2,
         cv2.LINE_AA,
@@ -523,8 +523,8 @@ def process_video(video_path):
 
     while True:
         ret, frame = video_capture.read()
+        frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
         if not ret:
-            frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
             print("Reached the end of the video.")
             print(
                 {
