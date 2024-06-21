@@ -523,6 +523,7 @@ def process_video(video_path):
     while True:
         ret, frame = video_capture.read()
         if not ret:
+            frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
             print("Reached the end of the video.")
             print(
                 {
