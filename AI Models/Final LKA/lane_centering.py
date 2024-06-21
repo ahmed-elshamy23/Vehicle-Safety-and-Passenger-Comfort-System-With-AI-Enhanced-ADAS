@@ -19,6 +19,7 @@ LEFT_MARGIN = 17
 RIGHT_MARGIN = 83
 TOP_LEFT_MARGIN = 39
 TOP_RIGHT_MARGIN = 51
+camera_ip = "http://192.168.1.4:81/stream"
 
 # PID Controller Constants
 KP = 0.1  # Proportional. This is used to correct for the current error.
@@ -501,7 +502,7 @@ def process_video(video_path):
     if VIDEO_OR_CAMERA == "video":
         video_capture = cv2.VideoCapture(video_path)
     else:
-        video_capture = cv2.VideoCapture("http://192.168.1.8:81/stream")
+        video_capture = cv2.VideoCapture(camera_ip)
     if not video_capture.isOpened():
         raise IOError(f"Cannot open video {video_path}")
 
