@@ -13,13 +13,13 @@ from time import sleep  # import function sleep for delay
 # Define initial global constants for the region of interest (ROI)
 # INSTRUCTIONS: run the script, adjust the trackbars to define the region of interest,
 # and then use the values on the trackbars to update the global constants below:
-HORIZON = 47
+HORIZON = 28
 BOTTOM_TRIM = 99
-LEFT_MARGIN = 17
-RIGHT_MARGIN = 83
-TOP_LEFT_MARGIN = 39
-TOP_RIGHT_MARGIN = 51
-camera_ip = "http://192.168.1.4:81/stream"
+LEFT_MARGIN = 0
+RIGHT_MARGIN = 240
+TOP_LEFT_MARGIN = 0
+TOP_RIGHT_MARGIN = 240
+camera_ip = "http://192.168.196.186:81/stream"
 
 # PID Controller Constants
 KP = 0.1  # Proportional. This is used to correct for the current error.
@@ -42,7 +42,7 @@ VIDEO_OR_CAMERA = "camera"  # "video" or "camera"
 ROAD_WIDTH = 3.7  # meters
 
 # Set to True to hide the region of interest overlay
-HIDE_ROI = True
+HIDE_ROI = False
 
 # Initialize buffers for storing line coefficients
 left_line_buffer = []
@@ -523,7 +523,8 @@ def process_video(video_path):
 
     while True:
         ret, frame = video_capture.read()
-        frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        # frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        # frame = frame[0:180, 0:240]
         if not ret:
             print("Reached the end of the video.")
             print(
