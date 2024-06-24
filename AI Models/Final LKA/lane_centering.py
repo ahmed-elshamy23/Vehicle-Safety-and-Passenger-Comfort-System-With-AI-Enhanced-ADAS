@@ -47,6 +47,7 @@ HIDE_ROI = False
 # Initialize buffers for storing line coefficients
 left_line_buffer = []
 right_line_buffer = []
+angle_buffer = 90
 buffer_length = 10  # Determines how many frames to average over
 
 # # Motor control using GPIO
@@ -399,7 +400,9 @@ def draw_lines(img, lines, top_y, bottom_y, offset_file, control_actions_file):
             steering_angle = 135
         elif steering_angle <= 45:
             steering_angle = 45
-        client.publish("esp/subtopic", int(steering_angle))
+        if abs(steering_angle - angle_buffer) >= 5:
+            client.publish("esp/subtopic", int(steering_angle))
+            angle_buffer = steering_angle
     else:
         # Optionally handle cases where one or neither lane is detected
         pass
