@@ -60,18 +60,15 @@ for encodeface, faceloc in zip(encodeCurrnetFrame, faceCurrentFram):
         )
         # Publish MQTT message based on recognition result
         if name == "Elon":
-            client.publish("esp/subtopic", "00")
+            client.publish("esp/subtopic", "136")
         elif name == "Mo_salah":
-            client.publish("esp/subtopic", "01")
+            client.publish("esp/subtopic", "137")
         elif name == "Treka":
-            client.publish("esp/subtopic", "02")
-        elif name == "Will smith":
-            client.publish("esp/subtopic", "03")
+            client.publish("esp/subtopic", "138")
 
-         
 
-      cv2.imshow("Face recognition", img)
-      if cv2.waitKey(20) & 0xFF == ord('q'):
+cv2.imshow("Face recognition", img)
+    if cv2.waitKey(20) & 0xFF == ord('q'):
         break
 # Close the video capture
 cap.release()
