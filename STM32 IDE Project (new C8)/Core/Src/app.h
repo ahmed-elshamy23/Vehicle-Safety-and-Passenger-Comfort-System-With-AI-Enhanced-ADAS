@@ -2,7 +2,7 @@
 #define APP_H
 
 #define ACC_THRESHOLD 1.0f
-#define AEB_THRESHOLD 0.5f
+#define AEB_THRESHOLD 0.25f
 
 #define INITIAL_ANGLE 90
 #define INITIAL_SPEED 30
