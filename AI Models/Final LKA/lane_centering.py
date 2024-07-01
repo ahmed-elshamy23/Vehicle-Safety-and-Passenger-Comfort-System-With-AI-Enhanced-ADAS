@@ -39,7 +39,7 @@ SETPOINT_WEIGHTS = (
 VIDEO_OR_CAMERA = "camera"  # "video" or "camera"
 
 # ROAD WIDTH
-ROAD_WIDTH = 3.7  # meters
+ROAD_WIDTH = 25  # centimeters
 
 # Set to True to hide the region of interest overlay
 HIDE_ROI = False
@@ -278,7 +278,7 @@ def draw_lines(img, lines, top_y, bottom_y, offset_file, control_actions_file):
     deviation_meters = deviation_pixels * meters_per_pixel
 
     # Write the deviation to the offset file
-    print(f"Deviation: {deviation_meters:.2f} m")
+    print(f"Deviation: {deviation_meters:.2f} cm")
     offset_file.write(f"{deviation_meters}\n")
 
     deviation_direction = "right" if deviation_meters > 0 else "left"
