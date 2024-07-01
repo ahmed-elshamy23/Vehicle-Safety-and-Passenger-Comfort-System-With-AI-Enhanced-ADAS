@@ -33,7 +33,7 @@ mqtt_client = mqtt.Client()
 
 # Define MQTT broker and topic
 mqtt_broker = "mqtt.eclipseprojects.io"
-mqtt_topic = "fatigue_detection"
+mqtt_topic = "esp/subtopic"
 
 
 def send_mqtt_message(message):
