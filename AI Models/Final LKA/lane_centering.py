@@ -36,7 +36,7 @@ SETPOINT_WEIGHTS = (
 # Input can either be a video on disk, or a live video stream from a USB camera
 # Video files are stored in the test_videos directory.
 # See the very bottom of the script for the list of available videos.
-VIDEO_OR_CAMERA = "camera"  # "video" or "camera"
+VIDEO_OR_CAMERA = "video"  # "video" or "camera"
 
 # ROAD WIDTH
 ROAD_WIDTH = 25  # centimeters
@@ -226,7 +226,7 @@ def draw_lines(img, lines, top_y, bottom_y, offset_file, control_actions_file):
     Returns:
     - Image with lines drawn.
     """
-    global left_line_buffer, right_line_buffer, previous_time
+    global left_line_buffer, right_line_buffer, previous_time, angle_buffer
 
     left_line_x = []
     left_line_y = []
@@ -401,7 +401,7 @@ def draw_lines(img, lines, top_y, bottom_y, offset_file, control_actions_file):
         elif steering_angle <= 45:
             steering_angle = 45
         if abs(steering_angle - angle_buffer) >= 5:
-            client.publish("esp/subtopic", int(steering_angle))
+            client.publish("esp/subtopic", str(int(steering_angle)))
             angle_buffer = steering_angle
     else:
         # Optionally handle cases where one or neither lane is detected
