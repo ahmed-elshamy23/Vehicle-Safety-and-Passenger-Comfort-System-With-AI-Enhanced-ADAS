@@ -7,3 +7,4 @@ __pycache__/
 
 # Offset values are stored as .txt files
 *.txt
+./venv
