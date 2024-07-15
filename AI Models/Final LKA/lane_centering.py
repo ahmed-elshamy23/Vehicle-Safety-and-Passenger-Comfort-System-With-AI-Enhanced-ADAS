@@ -11,11 +11,12 @@ from time import sleep  # import function sleep for delay
 from lka_modules.global_variables import *
 from lka_modules.trackbars import *
 from lka_modules.image_processing import *
-from lka_modules.drawer import * # it also includes detectors
+from lka_modules.drawer import *  # it also includes detectors
 from lka_modules.fileIO import *
 
 # ONLY FOR LINUX ENVIRONMENT
 import os
+
 os.environ["QT_QPA_PLATFORM"] = "xcb"
 
 
@@ -60,21 +61,20 @@ def main(video_path):
             top_right_margin,
         ) = get_trackbar_values("result")
         meta_data = {
-                    "HORIZON": horizon,
-                    "BOTTOM_TRIM": bottom,
-                    "LEFT_MARGIN": left_margin,
-                    "RIGHT_MARGIN": right_margin,
-                    "TOP_LEFT_MARGIN": top_left_margin,
-                    "TOP_RIGHT_MARGIN": top_right_margin,
-                    "KP": pid_controller.kp,
-                    "KI": pid_controller.ki,
-                    "KD": pid_controller.kd,
-                }
+            "HORIZON": horizon,
+            "BOTTOM_TRIM": bottom,
+            "LEFT_MARGIN": left_margin,
+            "RIGHT_MARGIN": right_margin,
+            "TOP_LEFT_MARGIN": top_left_margin,
+            "TOP_RIGHT_MARGIN": top_right_margin,
+            "KP": pid_controller.kp,
+            "KI": pid_controller.ki,
+            "KD": pid_controller.kd,
+        }
         if not ret:
             print("Reached the end of the video.")
             print(meta_data)
-            break 
-
+            break
 
         height, width = frame.shape[:2]
         top_y = int(height * horizon / 100.0)
@@ -103,7 +103,7 @@ def main(video_path):
             ],
             dtype=np.int32,
         )
-        
+
         bird_view = bird_eye_view(vertices, frame)
 
         canny_image = canny_edge_detector(bird_view)
@@ -120,14 +120,12 @@ def main(video_path):
 
         cv2.imshow("canny", canny_image)
         # concated = get_hconcat_frames(combo_image, canny_image)
-        cv2.imshow('result', cv2.resize(combo_image, (0, 0), fx=0.5, fy=0.5))
+        cv2.imshow("result", cv2.resize(combo_image, (0, 0), fx=0.5, fy=0.5))
         if cv2.waitKey(1) & 0xFF == ord("q"):
             print("Exiting...")
             print("File saved as:", unique_filename)
 
-            print(
-                f"meta data: {meta_data}"
-            )
+            print(f"meta data: {meta_data}")
 
             break
 

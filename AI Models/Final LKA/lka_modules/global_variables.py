@@ -1,10 +1,13 @@
 from lka_modules.pid import PIDController
 import datetime
-HORIZON = 65
+import paho.mqtt.client as mqtt
+
+HORIZON = 62
 BOTTOM_TRIM = 99
 BOTTOM_MARGIN = 0
-TOP_MARGIN = 40
+TOP_MARGIN = 30
 camera_ip = "http://192.168.196.186:81/stream"
+# camera_ip = "http://192.168.196.144:4747/mjpegfeed?640x480"
 
 # PID Controller Constants
 KP = 0  # Proportional. This is used to correct for the current error.
@@ -36,11 +39,11 @@ angle_buffer = 90
 buffer_length = 10  # Determines how many frames to average over
 
 
-# broker_address = "localhost"
-# port = 1883
-# # Create a MQTT client
-# client = mqtt.Client("esp/subtopic")
-# client.connect(broker_address, port)
+broker_address = "localhost"
+port = 1883
+# Create a MQTT client
+client = mqtt.Client("esp/subtopic")
+client.connect(broker_address, port)
 
 
 pid_controller = PIDController(

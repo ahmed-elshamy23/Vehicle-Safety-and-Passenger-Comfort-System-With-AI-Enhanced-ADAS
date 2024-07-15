@@ -4,6 +4,7 @@ import numpy as np
 import datetime
 import math
 
+
 def draw_roi(img, vertices, color=(0, 255, 0), thickness=5):
     """
     Draws the region of interest on the image.
@@ -22,9 +23,11 @@ def draw_roi(img, vertices, color=(0, 255, 0), thickness=5):
     cv2.line(img, tuple(vertices[0][-1]), tuple(vertices[0][0]), color, thickness)
     return img
 
+
 def get_hconcat_frames(img1, img2):
     img = cv2.hconcat([img1, img2])
     return img
+
 
 def detect_lines(masked_edges):
     """
@@ -48,6 +51,7 @@ def detect_lines(masked_edges):
     # cv2.waitKey(0)
 
     return detected_lines
+
 
 def draw_control_action_arrow(
     img,
@@ -76,7 +80,10 @@ def draw_control_action_arrow(
         img, base_position, (end_x, end_y), color, thickness, tipLength=tip_length
     )
 
-def draw_lines(img, bird_view, lines, top_y, bottom_y, offset_file, control_actions_file):
+
+def draw_lines(
+    img, bird_view, lines, top_y, bottom_y, offset_file, control_actions_file
+):
     """
     Draws lines on the image.
 
@@ -261,8 +268,12 @@ def draw_lines(img, bird_view, lines, top_y, bottom_y, offset_file, control_acti
             steering_angle = 135
         elif steering_angle <= 45:
             steering_angle = 45
+        if steering_angle > 90:
+            steering_angle += abs(90 - steering_angle) / 3
+        else:
+            steering_angle -= abs(90 - steering_angle) / 3
         if abs(steering_angle - int(angle_buffer)) >= 5:
-            # client.publish("esp/subtopic", str(int(steering_angle)))
+            client.publish("esp/subtopic", str(int(steering_angle)))
             angle_buffer = steering_angle
     else:
         # Optionally handle cases where one or neither lane is detected
@@ -280,6 +291,7 @@ def draw_lines(img, bird_view, lines, top_y, bottom_y, offset_file, control_acti
         cv2.LINE_AA,
     )
     return get_hconcat_frames(img, bird_view)
+
 
 def draw_poly_line(
     img, poly, top_y, bottom_y, color=(255, 0, 0), thickness=5, alpha=0.5
@@ -307,4 +319,3 @@ def draw_poly_line(
 
     # Blend the overlay with the original image
     cv2.addWeighted(lines_overlay, alpha, img, 1 - alpha, 0, img)
-
