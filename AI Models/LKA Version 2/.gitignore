@@ -1,9 +1,0 @@
-test_videos/dash1.mp4
-.DS_Store
-
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-
-# Offset values are stored as .txt files
-*.txt
