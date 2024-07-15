@@ -1,6 +1,5 @@
-../Core/Src/app.c:20:6:appInit	1
-../Core/Src/app.c:41:6:applyDriverProfile	5
-../Core/Src/app.c:75:6:getDistance	1
-../Core/Src/app.c:87:6:updateSpeedAndDirection	7
-../Core/Src/app.c:128:6:receiveUartFrame	5
-../Core/Src/app.c:150:6:steeringControl	2
+../Core/Src/app.c:22:6:appInit	1
+../Core/Src/app.c:43:6:applyDriverProfile	5
+../Core/Src/app.c:77:6:getDistance	1
+../Core/Src/app.c:89:6:updateSpeedAndDirection	7
+../Core/Src/app.c:130:6:receiveUartFrame	5

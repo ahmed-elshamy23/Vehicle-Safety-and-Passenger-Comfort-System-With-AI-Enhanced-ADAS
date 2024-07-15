@@ -9,62 +9,68 @@
 //            Partial images will be transmitted if image exceeds buffer size
 //
 //            You must select partition scheme from the board menu that has at least 3MB APP space.
-//            Face Recognition is DISABLED for ESP32 and ESP32-S2, because it takes up from 15 
+//            Face Recognition is DISABLED for ESP32 and ESP32-S2, because it takes up from 15
 //            seconds to process single frame. Face Detection is ENABLED if PSRAM is enabled as well
 
 // ===================
 // Select camera model
 // ===================
-//#define CAMERA_MODEL_WROVER_KIT // Has PSRAM
-//#define CAMERA_MODEL_ESP_EYE // Has PSRAM
-//#define CAMERA_MODEL_ESP32S3_EYE // Has PSRAM
-//#define CAMERA_MODEL_M5STACK_PSRAM // Has PSRAM
-//#define CAMERA_MODEL_M5STACK_V2_PSRAM // M5Camera version B Has PSRAM
-//#define CAMERA_MODEL_M5STACK_WIDE // Has PSRAM
-//#define CAMERA_MODEL_M5STACK_ESP32CAM // No PSRAM
-//#define CAMERA_MODEL_M5STACK_UNITCAM // No PSRAM
+// #define CAMERA_MODEL_WROVER_KIT // Has PSRAM
+// #define CAMERA_MODEL_ESP_EYE // Has PSRAM
+// #define CAMERA_MODEL_ESP32S3_EYE // Has PSRAM
+// #define CAMERA_MODEL_M5STACK_PSRAM // Has PSRAM
+// #define CAMERA_MODEL_M5STACK_V2_PSRAM // M5Camera version B Has PSRAM
+// #define CAMERA_MODEL_M5STACK_WIDE // Has PSRAM
+// #define CAMERA_MODEL_M5STACK_ESP32CAM // No PSRAM
+// #define CAMERA_MODEL_M5STACK_UNITCAM // No PSRAM
 #define CAMERA_MODEL_AI_THINKER // Has PSRAM
-//#define CAMERA_MODEL_TTGO_T_JOURNAL // No PSRAM
-//#define CAMERA_MODEL_XIAO_ESP32S3 // Has PSRAM
-// ** Espressif Internal Boards **
-//#define CAMERA_MODEL_ESP32_CAM_BOARD
-//#define CAMERA_MODEL_ESP32S2_CAM_BOARD
-//#define CAMERA_MODEL_ESP32S3_CAM_LCD
-//#define CAMERA_MODEL_DFRobot_FireBeetle2_ESP32S3 // Has PSRAM
-//#define CAMERA_MODEL_DFRobot_Romeo_ESP32S3 // Has PSRAM
+// #define CAMERA_MODEL_TTGO_T_JOURNAL // No PSRAM
+// #define CAMERA_MODEL_XIAO_ESP32S3 // Has PSRAM
+//  ** Espressif Internal Boards **
+// #define CAMERA_MODEL_ESP32_CAM_BOARD
+// #define CAMERA_MODEL_ESP32S2_CAM_BOARD
+// #define CAMERA_MODEL_ESP32S3_CAM_LCD
+// #define CAMERA_MODEL_DFRobot_FireBeetle2_ESP32S3 // Has PSRAM
+// #define CAMERA_MODEL_DFRobot_Romeo_ESP32S3 // Has PSRAM
 #include "camera_pins.h"
 
-const char* ssid = "Orange-Orange";
-const char* pass = "26072015Mm#";
-const char* ClientID = "**********";
-const char* broker = "192.168.1.12";
-const char* topic = "esp/subtopic";
+const char *ssid = "*****";
+const char *pass = "*****";
+const char *ClientID = "**********";
+const char *broker = "192.168.196.125";
+const char *topic = "esp/subtopic";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 
 /***************************************connecting wifi and mqtt****************************************************/
-void setupWifi(){
- delay(100); 
-//  Serial.print("\nConnecting to"); 
-//  Serial.println(ssid); 
- WiFi.begin(ssid, pass); 
- while(WiFi.status() != WL_CONNECTED) 
- { 
-   delay(100); 
-  //  Serial.print("-");
+void setupWifi()
+{
+  delay(100);
+  //  Serial.print("\nConnecting to");
+  //  Serial.println(ssid);
+  WiFi.begin(ssid, pass);
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(100);
+    //  Serial.print("-");
   }
-//  Serial.print("\nConnected to ");
-//  Serial.println(ssid);
+  //  Serial.print("\nConnected to ");
+  //  Serial.println(ssid);
 }
 
-void reconnect() {
-  while (!client.connected()) {
-    if (client.connect(ClientID)) {
+void reconnect()
+{
+  while (!client.connected())
+  {
+    if (client.connect(ClientID))
+    {
       // Serial.println("\nConnected to");
       // Serial.println(broker);
       client.subscribe(topic);
-    } else {
+    }
+    else
+    {
       // Serial.println("\nTrying connect again");
       delay(5000);
     }
@@ -72,11 +78,12 @@ void reconnect() {
 }
 /************************************************************************************************************************/
 
-void Callback(char* topic, byte* payload, unsigned int length){
+void Callback(char *topic, byte *payload, unsigned int length)
+{
   // Serial.print("Rcieved message: ");
   // Serial.println(topic);
   int i = 0, receivedNumber = 0;
-  while(i < length)
+  while (i < length)
   {
     receivedNumber = receivedNumber * 10 + payload[i] - '0';
     i++;
@@ -87,14 +94,15 @@ void Callback(char* topic, byte* payload, unsigned int length){
 void startCameraServer();
 void setupLedFlash(int pin);
 
-void setup() {
-  Serial.begin(9600); //serial monitor
-  //Serial1.begin(9600); //UART serial line
+void setup()
+{
+  Serial.begin(9600); // serial monitor
+  // Serial1.begin(9600); //UART serial line
 
   Serial.setDebugOutput(false);
   // Serial.println();
   setupWifi();
-  client.setServer(broker ,1883);
+  client.setServer(broker, 1883);
   client.setCallback(Callback);
 
   camera_config_t config;
@@ -119,25 +127,31 @@ void setup() {
   config.xclk_freq_hz = 20000000;
   config.frame_size = FRAMESIZE_UXGA;
   config.pixel_format = PIXFORMAT_JPEG; // for streaming
-  //config.pixel_format = PIXFORMAT_RGB565; // for face detection/recognition
+  // config.pixel_format = PIXFORMAT_RGB565; // for face detection/recognition
   config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;
   config.fb_location = CAMERA_FB_IN_PSRAM;
   config.jpeg_quality = 12;
   config.fb_count = 1;
-  
+
   // if PSRAM IC present, init with UXGA resolution and higher JPEG quality
   //                      for larger pre-allocated frame buffer.
-  if(config.pixel_format == PIXFORMAT_JPEG){
-    if(psramFound()){
+  if (config.pixel_format == PIXFORMAT_JPEG)
+  {
+    if (psramFound())
+    {
       config.jpeg_quality = 10;
       config.fb_count = 2;
       config.grab_mode = CAMERA_GRAB_LATEST;
-    } else {
+    }
+    else
+    {
       // Limit the frame size when PSRAM is not available
       config.frame_size = FRAMESIZE_SVGA;
       config.fb_location = CAMERA_FB_IN_DRAM;
     }
-  } else {
+  }
+  else
+  {
     // Best option for face detection/recognition
     config.frame_size = FRAMESIZE_240X240;
 #if CONFIG_IDF_TARGET_ESP32S3
@@ -152,20 +166,23 @@ void setup() {
 
   // camera init
   esp_err_t err = esp_camera_init(&config);
-  if (err != ESP_OK) {
+  if (err != ESP_OK)
+  {
     // Serial.printf("Camera init failed with error 0x%x", err);
     return;
   }
 
-  sensor_t * s = esp_camera_sensor_get();
+  sensor_t *s = esp_camera_sensor_get();
   // initial sensors are flipped vertically and colors are a bit saturated
-  if (s->id.PID == OV3660_PID) {
-    s->set_vflip(s, 1); // flip it back
-    s->set_brightness(s, 1); // up the brightness just a bit
+  if (s->id.PID == OV3660_PID)
+  {
+    s->set_vflip(s, 1);       // flip it back
+    s->set_brightness(s, 1);  // up the brightness just a bit
     s->set_saturation(s, -2); // lower the saturation
   }
   // drop down frame size for higher initial frame rate
-  if(config.pixel_format == PIXFORMAT_JPEG){
+  if (config.pixel_format == PIXFORMAT_JPEG)
+  {
     s->set_framesize(s, FRAMESIZE_QVGA);
   }
 
@@ -190,9 +207,11 @@ void setup() {
   // Serial.println("' to connect");
 }
 
-void loop() {
-   delay(1000);
-  if(!client.connected()){
+void loop()
+{
+  delay(1000);
+  if (!client.connected())
+  {
     reconnect();
   }
   client.loop();

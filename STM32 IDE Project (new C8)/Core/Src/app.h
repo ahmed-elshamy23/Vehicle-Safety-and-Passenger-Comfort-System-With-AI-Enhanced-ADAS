@@ -6,7 +6,7 @@
 
 #define INITIAL_ANGLE 90
 #define INITIAL_SPEED 30
-#define MAX_SPEED 60
+#define MAX_SPEED 15
 
 #define DRIVER_1 123
 #define DRIVER_2 124

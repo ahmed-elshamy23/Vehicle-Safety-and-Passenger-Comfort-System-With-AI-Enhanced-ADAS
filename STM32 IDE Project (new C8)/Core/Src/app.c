@@ -13,6 +13,8 @@
 #include "../../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h"
 #include "../../Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
 
+#include "USART_private.h"
+
 static f32 distance = 4.0f;
 static s8 speed = INITIAL_SPEED;
 static volatile u8 data = EMPTY_DATA, angle = INITIAL_ANGLE, angle_temp = INITIAL_ANGLE;
@@ -132,6 +134,7 @@ void receiveUartFrame()
     xLastWakeTime = xTaskGetTickCount();
     while (1)
     {
+    	USART_DR = 0xFF;
         data = USART_u8ReceiveData();
         if (data != EMPTY_DATA)
         {
@@ -147,18 +150,18 @@ void receiveUartFrame()
     }
 }
 
-void steeringControl()
-{
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 300;
-	xLastWakeTime = xTaskGetTickCount();
-	while (1)
-	{
-		if (angle_temp != angle)
-		{
-			SERVO_voidSetAngle(SERVO_STEERING, angle);
-			angle = angle_temp;
-		}
-		vTaskDelayUntil(&xLastWakeTime, xFrequency);
-	}
-}
+//void steeringControl()
+//{
+//	TickType_t xLastWakeTime;
+//	const TickType_t xFrequency = 300;
+//	xLastWakeTime = xTaskGetTickCount();
+//	while (1)
+//	{
+//		if (angle_temp != angle)
+//		{
+//			SERVO_voidSetAngle(SERVO_STEERING, angle);
+//			angle = angle_temp;
+//		}
+//		vTaskDelayUntil(&xLastWakeTime, xFrequency);
+//	}
+//}
