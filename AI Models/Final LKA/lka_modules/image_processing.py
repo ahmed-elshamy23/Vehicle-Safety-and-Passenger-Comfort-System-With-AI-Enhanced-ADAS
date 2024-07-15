@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from lka_modules.global_variables import *
 
+
 def canny_edge_detector(img):
     """
     Applies Canny edge detection algorithm to the input image after converting it to HSL color space.
@@ -56,15 +57,16 @@ def region_of_interest(edges, vertices):
 
     return masked_edges
 
+
 def bird_eye_view(ROI, frame):
-    bottom_left =    ROI[0][0]
-    top_left =       ROI[0][1]
-    top_right =      ROI[0][2]
-    bottom_right =   ROI[0][3]
+    bottom_left = ROI[0][0]
+    top_left = ROI[0][1]
+    top_right = ROI[0][2]
+    bottom_right = ROI[0][3]
 
     height, width = frame.shape[:2]
     src_vert = np.float32([bottom_left, bottom_right, top_right, top_left])
     dest_vert = np.float32([[0, height], [width, height], [width, 0], [0, 0]])
-    
+
     matrix = cv2.getPerspectiveTransform(src_vert, dest_vert)
     return cv2.warpPerspective(frame, matrix, (width, height))

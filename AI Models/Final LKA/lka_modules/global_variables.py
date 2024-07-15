@@ -2,17 +2,16 @@ from lka_modules.pid import PIDController
 import datetime
 import paho.mqtt.client as mqtt
 
-HORIZON = 62
+HORIZON = 69
 BOTTOM_TRIM = 99
 BOTTOM_MARGIN = 0
-TOP_MARGIN = 30
+TOP_MARGIN = 23
 camera_ip = "http://192.168.196.186:81/stream"
-# camera_ip = "http://192.168.196.144:4747/mjpegfeed?640x480"
 
 # PID Controller Constants
-KP = 0  # Proportional. This is used to correct for the current error.
+KP = 10  # Proportional. This is used to correct for the current error.
 KI = 0  # Integral. This is used to correct for steady-state error.
-KD = 0  # Derivative. This is used to dampen the oscillations around the setpoint.
+KD = 2  # Derivative. This is used to dampen the oscillations around the setpoint.
 INTEGRAL_LIMIT = 100  # Maximum value for the integral term. This is to prevent integral windup, which can cause the controller to overshoot.
 DERIVATE_FILTER_TAU = 0.01  # Time constant for the derivative filter. This is used to smooth out the derivative term.
 SETPOINT_WEIGHTS = (
@@ -24,7 +23,7 @@ SETPOINT_WEIGHTS = (
 # Input can either be a video on disk, or a live video stream from a USB camera
 # Video files are stored in the test_videos directory.
 # See the very bottom of the script for the list of available videos.
-VIDEO_OR_CAMERA = "video"  # "video" or "camera"
+VIDEO_OR_CAMERA = "camera"  # "video" or "camera"
 
 # ROAD WIDTH
 ROAD_WIDTH = 25  # centimeters

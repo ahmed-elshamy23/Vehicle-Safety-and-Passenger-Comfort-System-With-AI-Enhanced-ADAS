@@ -159,6 +159,15 @@ def draw_lines(
 
     # Assuming deviation_meters is the current value you want to correct with PID
     control_action = pid_controller.update(deviation_meters, dt)
+    steering_angle = 90 + control_action
+    if steering_angle >= 135:
+        steering_angle = 135
+    elif steering_angle <= 45:
+        steering_angle = 45
+    steering_angle = 180 - steering_angle
+    if abs(steering_angle - int(angle_buffer)) >= 5:
+        client.publish("esp/subtopic", str(int(steering_angle)))
+        angle_buffer = steering_angle
     # adjust_motor(control_action)
 
     # For now, let's just print the control action to see the output
@@ -244,16 +253,17 @@ def draw_lines(
             (0, 255, 255),
             2,
         )
-        if int(top_midpoint_x) == int(bottom_midpoint_x):
-            steering_angle = 90
-        else:
-            center_line_slope = (top_y - bottom_y) / (
-                int(top_midpoint_x) - int(bottom_midpoint_x)
-            )
-            steering_angle = math.atan(abs(center_line_slope)) * 180 / math.pi
-            if center_line_slope > 0:
-                steering_angle -= 180
-                steering_angle = abs(steering_angle)
+
+        # if int(top_midpoint_x) == int(bottom_midpoint_x):
+        #     steering_angle = 90
+        # else:
+        #     center_line_slope = (top_y - bottom_y) / (
+        #         int(top_midpoint_x) - int(bottom_midpoint_x)
+        #     )
+        #     steering_angle = math.atan(abs(center_line_slope)) * 180 / math.pi
+        #     if center_line_slope > 0:
+        #         steering_angle -= 180
+        #         steering_angle = abs(steering_angle)
         cv2.putText(
             img,
             f"Required Steering Angle: {int(steering_angle)}",
@@ -264,17 +274,6 @@ def draw_lines(
             2,
             cv2.LINE_AA,
         )
-        if steering_angle >= 135:
-            steering_angle = 135
-        elif steering_angle <= 45:
-            steering_angle = 45
-        if steering_angle > 90:
-            steering_angle += abs(90 - steering_angle) / 3
-        else:
-            steering_angle -= abs(90 - steering_angle) / 3
-        if abs(steering_angle - int(angle_buffer)) >= 5:
-            client.publish("esp/subtopic", str(int(steering_angle)))
-            angle_buffer = steering_angle
     else:
         # Optionally handle cases where one or neither lane is detected
         pass

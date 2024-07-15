@@ -118,7 +118,7 @@ def main(video_path):
         if not HIDE_ROI:
             combo_image = draw_roi(combo_image, vertices)
 
-        cv2.imshow("canny", canny_image)
+        # cv2.imshow("canny", canny_image)
         # concated = get_hconcat_frames(combo_image, canny_image)
         cv2.imshow("result", cv2.resize(combo_image, (0, 0), fx=0.5, fy=0.5))
         if cv2.waitKey(1) & 0xFF == ord("q"):
