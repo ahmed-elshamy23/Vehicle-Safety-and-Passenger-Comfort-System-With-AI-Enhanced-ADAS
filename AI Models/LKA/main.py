@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from LKA_module import LaneDetector, LaneDetectorResult
 
-cap = cv2.VideoCapture('inVideosExamples/harder_challenge_video.mp4')
+cap = cv2.VideoCapture("test_videos/test5.mp4")
 
 ret, frame = cap.read()
 if not ret:
@@ -27,11 +27,10 @@ while cap.isOpened():
 
     result_frame = lane_result.plot_lanes_and_center_line()
 
-    cv2.imshow('Lane Detection', result_frame)
+    cv2.imshow("Lane Detection", result_frame)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
 cap.release()
 cv2.destroyAllWindows()
-
